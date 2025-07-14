@@ -1,0 +1,26 @@
+import cv2
+import time
+import os
+
+weightCam, heightCam = 640, 480
+
+#Initialize WebCam Capture
+cap  = cv2.VideoCapture(0)
+cap.set(3, weightCam)
+cap.set(4, heightCam)
+
+folderPath = "FingerImage"
+myList = os.listdir(folderPath)
+print(myList)
+overlayList = []
+for impath in myList:
+    image = cv2.imread(f'{folderPath}/{impath}')
+    # print(f'{folderPath}/{impath}') verifying
+    overlayList.append(image)
+
+print(len(overlayList))
+
+while True:
+    success, img = cap.read()
+    cv2.imshow("Image", img)
+    cv2.waitKey(1)
