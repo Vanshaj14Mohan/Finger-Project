@@ -30,7 +30,8 @@ while True:
     cTime = time.time()
     fps = 1/(cTime-pTime)
     pTime = cTime
-    
+
+    cv2.putText(img, f'FPS: {int(fps)}')
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
