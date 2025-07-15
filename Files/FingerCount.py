@@ -22,5 +22,7 @@ print(len(overlayList))
 
 while True:
     success, img = cap.read()
+    img[0:283, 0:200] = overlayList[0]
+
     cv2.imshow("Image", img)
     cv2.waitKey(1)
