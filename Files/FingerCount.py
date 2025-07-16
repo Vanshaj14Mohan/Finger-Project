@@ -73,6 +73,7 @@ while True:
     #print(lmList)
 
     if len(lmList) != 0:
+        for id in range(0,5):
         if lmList[8][2] < lmList[6][2]:
             print("Index Finger Opened")
 
