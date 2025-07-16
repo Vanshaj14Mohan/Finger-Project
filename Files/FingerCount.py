@@ -64,12 +64,13 @@ print(f"Loaded {len(overlayList)} overlay images")
 pTime = 0
 detector = htm.HandDetector(detectionCon=0.75)
 
+tipIds = [4,8,12,15,20]
 
 while True:
     success, img = cap.read()
     img = detector.findHands(img)
     lmList = detector.findPosition(img, draw=False)
-    print(lmList)
+    #print(lmList)
 
     if len(lmList) != 0:
         if lmList[8][2] < lmList[6][2]:
