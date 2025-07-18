@@ -1,18 +1,3 @@
-# import cv2
-# import time
-# import os
-
-# widthCam, heightCam = 640, 480
-
-# cap = cv2.VideoCapture(0)
-# cap.set(3, widthCam)
-# cap.set(4, heightCam)
-
-# while True:
-#     success, img = cap.read()
-#     cv2.imshow("Image", img)
-#     cv2.waitKey(1)
-
 import cv2
 import time
 import os
@@ -55,7 +40,7 @@ while True:
                 fingers.append(1)
             else:
                 fingers.append(0)
-                
+
         print(fingers)
 
     h,w,c = overlayList[0].shape
@@ -68,7 +53,6 @@ while True:
 
     cv2.putText(img, f'FPS: {int(fps)}', (400, 70),
                 cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
-
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
