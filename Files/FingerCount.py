@@ -48,7 +48,6 @@ while True:
                 fingers.append(1)
             else:
                 fingers.append(0)
-
         #print(fingers)
         totalFingers = fingers.count(1)
         print(totalFingers)
