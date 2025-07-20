@@ -7,8 +7,8 @@ weightCam, heightCam = 640, 480
 
 #Initialize WebCam Capture
 cap  = cv2.VideoCapture(0)
-cap.set(3, weightCam)
-cap.set(4, heightCam)
+cap.set(3, weightCam) # set width
+cap.set(4, heightCam) # set height
 
 folderPath = "FingerImage"
 myList = os.listdir(folderPath)
@@ -19,6 +19,7 @@ for impath in myList:
     image = cv2.imread(f'{folderPath}/{impath}')
     # print(f'{folderPath}/{impath}') verifying
     overlayList.append(image)
+
 print(len(overlayList))# Printing length
 pTime = 0
 
@@ -49,7 +50,7 @@ while True:
                 fingers.append(0)
         #print(fingers)
         totalFingers = fingers.count(1)
-        print(totalFingers)
+        print(totalFingers) # Printing total fingers
 
         h,w,c = overlayList[totalFingers-1].shape
         #img[0:283, 0:200] = overlayList[0]
