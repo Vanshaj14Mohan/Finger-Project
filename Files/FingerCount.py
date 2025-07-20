@@ -19,8 +19,7 @@ for impath in myList:
     image = cv2.imread(f'{folderPath}/{impath}')
     # print(f'{folderPath}/{impath}') verifying
     overlayList.append(image)
-
-print(len(overlayList))
+print(len(overlayList))# Printing length
 pTime = 0
 
 detector = htm.HandDetector(detectionCon=0.75)
