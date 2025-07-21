@@ -1,3 +1,5 @@
+
+
 import cv2
 import time
 import os
@@ -72,5 +74,3 @@ while True:
     
     cv2.imshow("Image", img)
     cv2.waitKey(1)
-
-
