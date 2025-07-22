@@ -1,4 +1,4 @@
-# 🖐️ Finger Count Project (Right Hand Only)
+# HandIQ — Real-Time Finger Counter Using OpenCV + MediaPipe 🖐️🔍 
 
 This project is a **real-time finger counting system** using computer vision. Built with **OpenCV** and **MediaPipe**, it detects and counts fingers on the **right hand only**, and displays the result visually using overlay images and a dynamic interface.
 
