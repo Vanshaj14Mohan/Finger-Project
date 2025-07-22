@@ -9,7 +9,7 @@ It is inspired by a modular hand tracking system developed earlier and reuses a 
 ## 📸 Demo
 
 <p align="center">
-  <img src="Output/1.jpg" width="120"/>
+  <img src="Output/1.png" width="120"/>
   <img src="FingerImage/3.jpg" width="120"/>
   <img src="FingerImage/5.jpg" width="120"/>
 </p>
