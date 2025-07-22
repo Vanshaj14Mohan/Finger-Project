@@ -1,74 +1,166 @@
+# import cv2
+# import time
+# import os
+# import HandTrackingModule as htm
+
+# weightCam, heightCam = 640, 480
+
+# #Initialize WebCam Capture
+# cap  = cv2.VideoCapture(0)
+# cap.set(3, weightCam) # set width
+# cap.set(4, heightCam) # set height
+
+# folderPath = "FingerImage"
+# myList = os.listdir(folderPath)
+# print(myList)
+
+# overlayList = []
+# for impath in myList:
+#     image = cv2.imread(f'{folderPath}/{impath}')
+#     # print(f'{folderPath}/{impath}') verifying
+#     overlayList.append(image)
+
+# print(len(overlayList))# Printing length
+# pTime = 0
+
+# detector = htm.HandDetector(detectionCon=0.75)
+# tipsIds = [4, 8, 12, 16, 20]
+
+# while True:
+#     success, img = cap.read()
+#     img = detector.findHands(img)
+#     lmList = detector.findPosition(img, draw=False)
+#     # print(lmList)
+
+#     if len(lmList) != 0:
+#         fingers = []
+#         #For Thumb
+#         if lmList[tipsIds[0]][1] > lmList[tipsIds[0]-1][1]:
+#             # print("Index Finger Opened")
+#             fingers.append(1)
+#         else:
+#             fingers.append(0)
+
+#         #For 4 Fingers
+#         for id in range(1,5):
+#             if lmList[tipsIds[id]][2] < lmList[tipsIds[id]-2][2]:
+#                 # print("Index Finger Opened")
+#                 fingers.append(1)
+#             else:
+#                 fingers.append(0)
+#         #print(fingers)
+#         totalFingers = fingers.count(1)
+#         print(totalFingers) # Printing total fingers
+
+#         h,w,c = overlayList[totalFingers-1].shape
+#         #img[0:283, 0:200] = overlayList[0]
+#         img[0:h, 0:w] = overlayList[totalFingers-1]
+
+#         cv2.rectangle(img, (20, 225), (170, 425), (0, 255, 0), cv2.FILLED)
+#         cv2.putText(img, str(totalFingers), (45, 375), cv2.FONT_HERSHEY_PLAIN, 10, (255, 0, 0), 25)
+
+#     cTime = time.time()
+#     fps =  1/(cTime - pTime)
+#     pTime = cTime
+
+#     cv2.putText(img, f'FPS: {int(fps)}', (400, 70),
+#                 cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
+    
+#     cv2.imshow("Image", img)
+#     if cv2.waitKey(1) & 0xFF == ord('q'):
+#         break
+    
+#     cv2.imshow("Image", img)
+#     cv2.waitKey(1)
+
 import cv2
 import time
 import os
-import HandTrackingModule as htm
+import HandTrackingModule as htm  # Importing custom hand tracking module
 
+# Set camera resolution
 weightCam, heightCam = 640, 480
 
-#Initialize WebCam Capture
-cap  = cv2.VideoCapture(0)
-cap.set(3, weightCam) # set width
-cap.set(4, heightCam) # set height
+# Initialize webcam capture
+cap = cv2.VideoCapture(0)
+cap.set(3, weightCam)  # Set width
+cap.set(4, heightCam)  # Set height
 
+# Load finger images from folder
 folderPath = "FingerImage"
-myList = os.listdir(folderPath)
+myList = os.listdir(folderPath)  # List all image filenames in the folder
 print(myList)
 
-overlayList = []
+overlayList = []  # List to store loaded images
 for impath in myList:
-    image = cv2.imread(f'{folderPath}/{impath}')
-    # print(f'{folderPath}/{impath}') verifying
-    overlayList.append(image)
+    image = cv2.imread(f'{folderPath}/{impath}')  # Read each image
+    overlayList.append(image)  # Add to the overlay list
 
-print(len(overlayList))# Printing length
-pTime = 0
+print(len(overlayList))  # Print how many images were loaded
 
+pTime = 0  # For FPS calculation
+
+# Initialize the hand detector with 0.75 detection confidence
 detector = htm.HandDetector(detectionCon=0.75)
+
+# IDs for the tips of each finger according to MediaPipe
 tipsIds = [4, 8, 12, 16, 20]
 
+# Main loop
 while True:
-    success, img = cap.read()
-    img = detector.findHands(img)
-    lmList = detector.findPosition(img, draw=False)
-    # print(lmList)
+    success, img = cap.read()  # Read frame from webcam
+    img = detector.findHands(img)  # Detect hands and draw landmarks
+    lmList = detector.findPosition(img, draw=False)  # Get landmark list without drawing
 
     if len(lmList) != 0:
         fingers = []
-        #For Thumb
+
+        # ----- Thumb -----
+        # For right hand: if tip (id 4) is to the right of joint (id 3), it's open
         if lmList[tipsIds[0]][1] > lmList[tipsIds[0]-1][1]:
-            # print("Index Finger Opened")
             fingers.append(1)
         else:
             fingers.append(0)
 
-        #For 4 Fingers
-        for id in range(1,5):
+        # ----- Other 4 Fingers -----
+        # If tip is above the middle joint, the finger is open
+        for id in range(1, 5):
             if lmList[tipsIds[id]][2] < lmList[tipsIds[id]-2][2]:
-                # print("Index Finger Opened")
                 fingers.append(1)
             else:
                 fingers.append(0)
-        #print(fingers)
-        totalFingers = fingers.count(1)
-        print(totalFingers) # Printing total fingers
 
-        h,w,c = overlayList[totalFingers-1].shape
-        #img[0:283, 0:200] = overlayList[0]
+        # Count number of fingers open
+        totalFingers = fingers.count(1)
+        print(totalFingers)
+
+        # Display corresponding finger image overlay
+        h, w, c = overlayList[totalFingers-1].shape
         img[0:h, 0:w] = overlayList[totalFingers-1]
 
+        # Draw a filled green rectangle on the screen
         cv2.rectangle(img, (20, 225), (170, 425), (0, 255, 0), cv2.FILLED)
-        cv2.putText(img, str(totalFingers), (45, 375), cv2.FONT_HERSHEY_PLAIN, 10, (255, 0, 0), 25)
 
+        # Put the total finger count as text inside the rectangle
+        cv2.putText(img, str(totalFingers), (45, 375),
+                    cv2.FONT_HERSHEY_PLAIN, 10, (255, 0, 0), 25)
+
+    # Calculate and display FPS
     cTime = time.time()
-    fps =  1/(cTime - pTime)
+    fps = 1 / (cTime - pTime)
     pTime = cTime
 
     cv2.putText(img, f'FPS: {int(fps)}', (400, 70),
                 cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
-    
+
+    # Show the final output frame
     cv2.imshow("Image", img)
+
+    # Break loop if 'q' key is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-    
-    cv2.imshow("Image", img)
-    cv2.waitKey(1)
+
+    # (Redundant) display call — this line is not needed and can be removed
+    # cv2.imshow("Image", img)
+    # cv2.waitKey(1)
+
