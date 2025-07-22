@@ -126,5 +126,6 @@ Pinky   : 20
 
 ## 👤 Author
 
-**Vanshaj P Mohan**
+**Made with ❤️ by Vanshaj P Mohan, a Data Science Enthusiast.
+Feel free to reach out for any collaborations or feedback!**
 
