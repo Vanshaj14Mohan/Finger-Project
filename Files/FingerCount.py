@@ -55,7 +55,7 @@ while True:
             else:
                 fingers.append(0)
 
-        # Count number of fingers open
+        # Count the number of fingers open
         totalFingers = fingers.count(1)
         print(totalFingers)
 
